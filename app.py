@@ -71,15 +71,17 @@ def predict_fake_news(text, model):
     st.write(f"Raw prediction value: {raw_prediction:.4f}")
     st.write(f"Threshold: 0.5")
     
-    # Convert to human readable format
+    # Convert to human readable format (REVERSED LOGIC)
+    # If your training data has 1=FAKE and 0=REAL, use this logic
+    # If your training data has 1=REAL and 0=FAKE, swap the conditions
     if prediction > 0.5:
-        result = "🚨 FAKE NEWS"
+        result = "✅ REAL NEWS"  # Changed: High prediction = REAL
         confidence = float(prediction * 100)  # Convert to Python float
-        color = "red"
-    else:
-        result = "✅ REAL NEWS"
-        confidence = float((1 - prediction) * 100)  # Convert to Python float
         color = "green"
+    else:
+        result = "🚨 FAKE NEWS"  # Changed: Low prediction = FAKE
+        confidence = float((1 - prediction) * 100)  # Convert to Python float
+        color = "red"
     
     return result, confidence, color
 
