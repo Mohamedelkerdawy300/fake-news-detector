@@ -51,14 +51,25 @@ def predict_fake_news(text, model):
     review = [ps.stem(word) for word in review if not word in stopwords.words('english')]
     review = ' '.join(review)
     
+    # Debug: Show preprocessed text
+    st.write(f"🔍 **Debug Info:**")
+    st.write(f"Preprocessed text: '{review}'")
+    
     # Convert to one-hot representation
     one_hot_words = one_hot(review, vocab_size)
+    st.write(f"One-hot length: {len(one_hot_words)}")
     
     # Pad the sequence
     embedded_words = pad_sequences([one_hot_words], padding='pre', maxlen=sent_length)
+    st.write(f"Padded sequence shape: {embedded_words.shape}")
     
     # Make prediction
     prediction = model.predict(embedded_words, verbose=0)[0][0]
+    raw_prediction = float(prediction)
+    
+    # Debug: Show raw prediction
+    st.write(f"Raw prediction value: {raw_prediction:.4f}")
+    st.write(f"Threshold: 0.5")
     
     # Convert to human readable format
     if prediction > 0.5:
