@@ -63,11 +63,11 @@ def predict_fake_news(text, model):
     # Convert to human readable format
     if prediction > 0.5:
         result = "🚨 FAKE NEWS"
-        confidence = prediction * 100
+        confidence = float(prediction * 100)  # Convert to Python float
         color = "red"
     else:
         result = "✅ REAL NEWS"
-        confidence = (1 - prediction) * 100
+        confidence = float((1 - prediction) * 100)  # Convert to Python float
         color = "green"
     
     return result, confidence, color
